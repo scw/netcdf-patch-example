@@ -1,6 +1,6 @@
 # netcdf-patch-example
 
-An example package illustrating the issue using the `patch` anaconda package as-is with a diff generated patch file.
+An example package illustrating [the issue](https://github.com/conda/conda-build/issues/2307) using the `patch` anaconda package as-is with a diff generated patch file.
 
 Instructions to reproduce on Windows:
 
