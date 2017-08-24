@@ -1,0 +1,33 @@
+diff --git a/setup.py b/setup.py
+--- a/setup.py
++++ b/setup.py
+@@ -53,7 +53,9 @@
+     hdf5_version = None
+     for line in f:
+         if line.startswith('#define H5_VERSION'):
+-            hdf5_version = line.split()[2]
++            # read version, omit patchlevel
++            hdf5_version_raw = line.split()[2].replace('"', '').split("-")[0]
++            hdf5_version = tuple(map(int, hdf5_version_raw.split(".")))
+     return hdf5_version
+
+ def check_ifnetcdf4(netcdf4_includedir):
+@@ -275,7 +277,7 @@
+         for direc in dirstosearch:
+             sys.stdout.write('checking %s ...\n' % direc)
+             hdf5_version = check_hdf5version(os.path.join(direc, 'include'))
+-            if hdf5_version is None or hdf5_version[1:6] < '1.8.0':
++            if hdf5_version is None or hdf5_version < (1, 8, 0):
+                 continue
+             else:
+                 HDF5_dir = direc
+@@ -290,7 +292,7 @@
+         hdf5_version = check_hdf5version(HDF5_incdir)
+         if hdf5_version is None:
+             raise ValueError('did not find HDF5 headers in %s' % HDF5_incdir)
+-        elif hdf5_version[1:6] < '1.8.0':
++        elif hdf5_version < (1, 8, 0):
+             raise ValueError('HDF5 version >= 1.8.0 is required')
+
+     if netCDF4_incdir is None and netCDF4_dir is None:
+

@@ -1,0 +1,48 @@
+package:
+  name: netcdf4
+  version: "1.2.4"
+
+source:
+  fn: netCDF4-1.2.4.tar.gz
+  url: https://pypi.python.org/packages/source/n/netCDF4/netCDF4-1.2.4.tar.gz
+  sha256: a6737eef106b75fe99b4b60e596666f86aeedc086c0037863382c1967a945351
+  patches:
+    - hdf5.patch
+
+build:
+  number: 0
+  entry_points:
+    - ncinfo = netCDF4.utils:ncinfo
+    - nc4tonc3 = netCDF4.utils:nc4tonc3
+    - nc3tonc4 = netCDF4.utils:nc3tonc4
+
+requirements:
+
+  build:
+    - python
+    - setuptools
+    - numpy
+    - cython
+
+  run:
+    - python
+    - setuptools
+    - numpy
+
+test:
+  imports:
+     - netCDF4
+     - netcdftime
+  commands:
+     - ncinfo --version
+
+about:
+   home: https://github.com/Unidata/netcdf4-python
+   # note that the documentation lists itself as "OSI approved" which is an 
+   # umbrella label for many licences. The license text exactly matches what
+   # Fedora calls the MIT "Old Style with legal disclaimer 2" form of the MIT
+   # license.
+   license: MIT
+   license_file: COPYING
+   summary: "Provides an object-oriented python interface to the netCDF version 4 library."
+   description: "netCDF version 4 has many features not found in earlier versions of the library, such as hierarchical groups, zlib compression, multiple unlimited dimensions, and new data types.  It is implemented on top of HDF5.  This module implements most of the new features, and can read and write netCDF files compatible with older versions of the library.  The API is modelled after Scientific.IO.NetCDF, and should be familiar to users of that module."
